@@ -27,7 +27,10 @@ void main() {
 
     float priceToSearchAgainst = 25f;
     List<Order> ordersAbovePrice = cart.getOrdersAbovePrice(priceToSearchAgainst);
-    IO.println("Заказы с ценой выше " + priceToSearchAgainst + ": " + ordersAbovePrice);
+    IO.println("Заказы с ценой выше:");
+    for (Order order : ordersAbovePrice) {
+        IO.println(order);
+    }
     IO.println();
 
     Map<Category, Integer> ordersAmountPerCategory = cart.getOrdersAmountPerCategory();
