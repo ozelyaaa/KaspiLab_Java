@@ -1,5 +1,6 @@
-package kz.testandpractice.project5;
+package kz.testandpractice.project5.repos;
 
+import kz.testandpractice.project5.entities.Product;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
