@@ -5,7 +5,7 @@ import kz.testandpractice.project5.models.DeliveryDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface DeliveryMapper {
     DeliveryDTO toDto(Delivery delivery);
     Delivery toEntity(DeliveryDTO deliveryDTO);

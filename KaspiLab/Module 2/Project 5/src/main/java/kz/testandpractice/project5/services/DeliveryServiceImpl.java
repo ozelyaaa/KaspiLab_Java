@@ -4,7 +4,9 @@ import kz.testandpractice.project5.entities.Delivery;
 import kz.testandpractice.project5.mappers.DeliveryMapper;
 import kz.testandpractice.project5.models.DeliveryDTO;
 import kz.testandpractice.project5.repos.DeliveryRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class DeliveryServiceImpl implements DeliveryService{
     private final DeliveryRepository deliveryRepository;
     private final DeliveryMapper deliveryMapper;

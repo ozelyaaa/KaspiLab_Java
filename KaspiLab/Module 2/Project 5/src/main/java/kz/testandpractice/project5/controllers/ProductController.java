@@ -1,12 +1,11 @@
 package kz.testandpractice.project5.controllers;
 
 import jakarta.validation.Valid;
-import kz.testandpractice.project5.entities.Product;
 import kz.testandpractice.project5.models.ProductDTO;
 import kz.testandpractice.project5.services.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,11 +20,13 @@ public class ProductController {
     }
 
     @GetMapping
+    @PreAuthorize("permitAll()")
     public List<ProductDTO> getProductList() {
         return productService.getProductList();
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('USER') and hasAuthority('SCOPE_read')")
     public ResponseEntity<ProductDTO> getProductById(@PathVariable Long id) {
         ProductDTO productDTO = productService.getProductById(id);
         return ResponseEntity.ok(productDTO);
