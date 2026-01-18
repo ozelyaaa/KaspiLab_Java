@@ -8,3 +8,10 @@ INSERT INTO products (name, price) VALUES
     ('Lenovo Yoga S940', 589990);
 INSERT INTO products (name, price) VALUES
     ('MacBook Pro', 1290990);
+
+INSERT INTO deliveries (product_id, address) VALUES
+    (1, 'Address1');
+INSERT INTO deliveries (product_id, address) VALUES
+    (2, 'Address2');
+INSERT INTO deliveries (product_id, address) VALUES
+    (5, 'Address1');

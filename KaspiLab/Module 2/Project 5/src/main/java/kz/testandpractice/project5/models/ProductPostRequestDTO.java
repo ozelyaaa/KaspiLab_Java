@@ -1,19 +1,16 @@
 package kz.testandpractice.project5.models;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class DeliveryDTO {
+public class ProductPostRequestDTO {
+    @Valid
     @NotNull
-    private Long productId;
+    private ProductDTO productDTO;
+
     @NotBlank
     private String address;
 }

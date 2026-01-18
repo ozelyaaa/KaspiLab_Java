@@ -1,10 +1,15 @@
 package kz.testandpractice.project5.models;
 
-import lombok.AllArgsConstructor;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class ProductDTO {
+    @NotBlank
     private String name;
-    private double price;
+    @Positive
+    private Double price;
 }

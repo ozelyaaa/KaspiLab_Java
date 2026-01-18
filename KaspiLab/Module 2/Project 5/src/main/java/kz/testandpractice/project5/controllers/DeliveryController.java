@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/delivery")
+@RequestMapping("/deliveries")
 public class DeliveryController {
     private final DeliveryService deliveryService;
 

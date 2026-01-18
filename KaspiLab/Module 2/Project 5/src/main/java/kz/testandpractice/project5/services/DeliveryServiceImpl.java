@@ -20,6 +20,7 @@ public class DeliveryServiceImpl implements DeliveryService{
     public DeliveryDTO createDelivery(DeliveryDTO deliveryDTO) {
         Delivery delivery = deliveryMapper.toEntity(deliveryDTO);
         Delivery savedDelivery = deliveryRepository.save(delivery);
+        System.out.println("Saved delivery: " + savedDelivery);
         return deliveryMapper.toDto(savedDelivery);
     }
 }

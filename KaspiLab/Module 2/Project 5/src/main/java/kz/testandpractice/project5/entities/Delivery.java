@@ -8,19 +8,18 @@ import lombok.*;
 @Entity
 @Table(name = "deliveries")
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class Delivery {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Setter
     @NotNull
+    @Column(name="product_id")
     private Long productId;
 
-    @Setter
     @NotBlank(message = "Address is required!")
     private String address;
 }

@@ -2,6 +2,7 @@ package kz.testandpractice.project5.controllers;
 
 import jakarta.validation.Valid;
 import kz.testandpractice.project5.models.ProductDTO;
+import kz.testandpractice.project5.models.ProductPostRequestDTO;
 import kz.testandpractice.project5.services.ProductService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,21 +21,21 @@ public class ProductController {
     }
 
     @GetMapping
-    @PreAuthorize("permitAll()")
+    //@PreAuthorize("permitAll()")
     public List<ProductDTO> getProductList() {
         return productService.getProductList();
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('USER') and hasAuthority('SCOPE_read')")
+    //@PreAuthorize("hasRole('USER') and hasAuthority('SCOPE_read')")
     public ResponseEntity<ProductDTO> getProductById(@PathVariable Long id) {
         ProductDTO productDTO = productService.getProductById(id);
         return ResponseEntity.ok(productDTO);
     }
 
     @PostMapping
-    public ProductDTO saveProduct(@Valid @RequestBody ProductDTO productDTO, String address) {
-        return productService.saveProduct(productDTO, address);
+    public ProductDTO saveProduct(@Valid @RequestBody ProductPostRequestDTO productPostRequestDTO) {
+        return productService.saveProduct(productPostRequestDTO);
     }
 
     @PutMapping("/{id}")

@@ -13,6 +13,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "products")
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Product {
@@ -20,13 +21,20 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Setter
     @NotBlank(message = "Name is required!")
     @Size(max = 255)
     private String name;
 
-    @Setter
     @NotNull
     @Positive
-    private double price;
+    private Double price;
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                '}';
+    }
 }
