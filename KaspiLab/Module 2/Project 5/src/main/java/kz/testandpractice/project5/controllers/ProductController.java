@@ -4,15 +4,18 @@ import jakarta.validation.Valid;
 import kz.testandpractice.project5.models.ProductDTO;
 import kz.testandpractice.project5.models.ProductPostRequestDTO;
 import kz.testandpractice.project5.services.ProductService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/products")
+@Slf4j
 public class ProductController {
     private final ProductService productService;
 
@@ -22,7 +25,8 @@ public class ProductController {
 
     @GetMapping
     //@PreAuthorize("permitAll()")
-    public List<ProductDTO> getProductList() {
+    public CompletableFuture<List<ProductDTO>> getProductList() {
+        //log.info("Controller thread: {}", Thread.currentThread().getName());
         return productService.getProductList();
     }
 

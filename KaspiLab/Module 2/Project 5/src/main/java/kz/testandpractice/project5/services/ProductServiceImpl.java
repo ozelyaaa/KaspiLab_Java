@@ -8,11 +8,15 @@ import kz.testandpractice.project5.models.ProductDTO;
 import kz.testandpractice.project5.models.ProductPostRequestDTO;
 import kz.testandpractice.project5.repos.ProductRepository;
 import kz.testandpractice.project5.entities.Product;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @Service
+@Slf4j
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final DeliveryClient deliveryClient;
@@ -24,10 +28,24 @@ public class ProductServiceImpl implements ProductService {
         this.productMapper = productMapper;
     }
 
-    public List<ProductDTO> getProductList() {
+    @Async("taskExecutor")
+    public CompletableFuture<List<ProductDTO>> getProductList() {
+        //log.info("START getProductListAsync - thread: {}", Thread.currentThread().getName());
+
         List<Product> products = (List<Product>) productRepository.findAll();
-        System.out.println(products);
-        return products.stream().map(productMapper::toDto).toList();
+        List<ProductDTO> productDTOList = products.stream()
+                .map(productMapper::toDto)
+                .toList();
+
+//      For testing purposes
+//        try {
+//            Thread.sleep(3000); // 3 seconds
+//        } catch (InterruptedException e) {
+//            Thread.currentThread().interrupt();
+//        }
+        //log.info("END getProductListAsync - thread: {}", Thread.currentThread().getName());
+
+        return CompletableFuture.completedFuture(productDTOList);
     }
 
     public ProductDTO getProductById(Long id) {
