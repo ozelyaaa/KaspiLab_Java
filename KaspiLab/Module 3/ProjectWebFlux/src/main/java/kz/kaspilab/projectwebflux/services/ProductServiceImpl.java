@@ -1,7 +1,10 @@
 package kz.kaspilab.projectwebflux.services;
 
+import kz.kaspilab.projectwebflux.clients.DeliveryClient;
+import kz.kaspilab.projectwebflux.domains.Product;
 import kz.kaspilab.projectwebflux.exceptions.NotFoundException;
 import kz.kaspilab.projectwebflux.mappers.ProductMapper;
+import kz.kaspilab.projectwebflux.models.DeliveryDTO;
 import kz.kaspilab.projectwebflux.models.ProductPostDTO;
 import kz.kaspilab.projectwebflux.models.ProductResponseDTO;
 import kz.kaspilab.projectwebflux.repos.ProductRepo;
@@ -16,6 +19,7 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepo productRepo;
     private final ProductMapper productMapper;
+    private final DeliveryClient deliveryClient;
 
     @Override
     public Flux<ProductResponseDTO> getProducts() {
@@ -32,9 +36,19 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Mono<ProductResponseDTO> addProduct(ProductPostDTO productPostDTO) {
-        return productRepo.
-                save(productMapper.toEntity(productPostDTO))
-                .map(productMapper::toDto);
+        Mono<Product> product = productRepo.
+                save(productMapper.toEntity(productPostDTO));
+
+        return product.flatMap(p -> {
+            DeliveryDTO deliveryDTO = DeliveryDTO
+                    .builder()
+                    .product_id(p.getId())
+                    .address(productPostDTO.getAddress())
+                    .build();
+            return deliveryClient
+                    .createDelivery(deliveryDTO)
+                    .thenReturn(p);
+        }).map(productMapper::toDto);
     }
 
     @Override

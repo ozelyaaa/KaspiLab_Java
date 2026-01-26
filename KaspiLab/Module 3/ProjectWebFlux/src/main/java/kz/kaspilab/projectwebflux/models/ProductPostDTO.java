@@ -6,4 +6,5 @@ import lombok.Data;
 public class ProductPostDTO {
     private String name;
     private Double price;
+    private String address;
 }
