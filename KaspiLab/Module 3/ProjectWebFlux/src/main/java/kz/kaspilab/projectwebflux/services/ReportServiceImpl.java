@@ -2,9 +2,7 @@ package kz.kaspilab.projectwebflux.services;
 
 import kz.kaspilab.projectwebflux.clients.DeliveryClient;
 import kz.kaspilab.projectwebflux.clients.ProductClient;
-import kz.kaspilab.projectwebflux.enums.DeliveryStatus;
 import kz.kaspilab.projectwebflux.exceptions.NotFoundException;
-import kz.kaspilab.projectwebflux.models.DeliveryDTO;
 import kz.kaspilab.projectwebflux.models.ReportDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,7 +25,6 @@ public class ReportServiceImpl implements ReportService {
                 Mono.zip(
                     productClient.getProductById(id),
                     deliveryClient.getDeliveryByProductId(id)
-                            .defaultIfEmpty(getDefaultDelivery(id))
                 ).map(tuple ->
                     new ReportDTO(
                             id,
@@ -35,12 +32,5 @@ public class ReportServiceImpl implements ReportService {
                             tuple.getT2().getStatus()
                     ))
             ).onErrorResume(NotFoundException.class, e -> Mono.empty());
-    }
-
-    private DeliveryDTO getDefaultDelivery(Integer product_id) {
-        DeliveryDTO deliveryDTO = new DeliveryDTO();
-        deliveryDTO.setProduct_id(product_id);
-        deliveryDTO.setStatus(DeliveryStatus.NOT_CREATED);
-        return deliveryDTO;
     }
 }

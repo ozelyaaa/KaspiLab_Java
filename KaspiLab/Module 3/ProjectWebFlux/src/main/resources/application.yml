@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: ProjectWebFlux
+
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/mydb
+    username: postgres
+    password: simple
+
+  flyway:
+    url: jdbc:postgresql://localhost:5432/mydb
+    user: postgres
+    password: simple
+
+server:
+  port: 8081

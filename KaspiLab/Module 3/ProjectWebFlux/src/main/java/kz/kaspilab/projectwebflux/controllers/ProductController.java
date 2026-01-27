@@ -20,7 +20,7 @@ public class ProductController {
 
     @GetMapping
     public Flux<ProductResponseDTO> getProducts() {
-        System.out.println("getProducts() on thread: " + Thread.currentThread().getName());
+        //System.out.println("getProducts() on thread: " + Thread.currentThread().getName());
         return productService.getProducts();
     }
 

@@ -12,7 +12,7 @@ public class DeliveryClient {
     private final WebClient webClient;
 
     public DeliveryClient(WebClient.Builder builder) {
-        this.webClient = builder.baseUrl("http://localhost:8080/deliveries").build();
+        this.webClient = builder.baseUrl("http://localhost:8081/deliveries").build();
     }
 
     public Mono<DeliveryDTO> getDeliveryByProductId(Integer productId) {

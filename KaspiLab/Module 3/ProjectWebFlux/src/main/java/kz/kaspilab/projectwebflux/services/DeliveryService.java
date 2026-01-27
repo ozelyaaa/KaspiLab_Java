@@ -5,4 +5,5 @@ import reactor.core.publisher.Mono;
 
 public interface DeliveryService {
     Mono<DeliveryDTO> createDelivery(DeliveryDTO deliveryDTO);
+    Mono<DeliveryDTO> getDeliveryByProductId(Integer product_id);
 }

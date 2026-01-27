@@ -2,6 +2,7 @@ package kz.kaspilab.projectwebflux.services;
 
 import kz.kaspilab.projectwebflux.clients.DeliveryClient;
 import kz.kaspilab.projectwebflux.domains.Product;
+import kz.kaspilab.projectwebflux.enums.DeliveryStatus;
 import kz.kaspilab.projectwebflux.exceptions.NotFoundException;
 import kz.kaspilab.projectwebflux.mappers.ProductMapper;
 import kz.kaspilab.projectwebflux.models.DeliveryDTO;
@@ -42,8 +43,9 @@ public class ProductServiceImpl implements ProductService {
         return product.flatMap(p -> {
             DeliveryDTO deliveryDTO = DeliveryDTO
                     .builder()
-                    .product_id(p.getId())
+                    .productId(p.getId())
                     .address(productPostDTO.getAddress())
+                    .status(DeliveryStatus.CREATED)
                     .build();
             return deliveryClient
                     .createDelivery(deliveryDTO)

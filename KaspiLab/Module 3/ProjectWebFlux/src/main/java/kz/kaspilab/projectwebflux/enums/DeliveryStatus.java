@@ -4,7 +4,7 @@ public enum DeliveryStatus {
     NOT_CREATED,
     CREATED,
     CONFIRMED,
-    IN_TRANSIT,
+    IN_PROGRESS,
     DELIVERED,
     CANCELLED
 }

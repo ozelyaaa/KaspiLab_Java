@@ -1,0 +1,2 @@
+ALTER TABLE delivery
+ALTER COLUMN product_id TYPE INTEGER;

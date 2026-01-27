@@ -11,7 +11,7 @@ public class ProductClient {
     private final WebClient webClient;
 
     public ProductClient(WebClient.Builder builder) {
-        this.webClient = builder.baseUrl("http://localhost:8080").build();
+        this.webClient = builder.baseUrl("http://localhost:8081/products").build();
     }
 
     public Mono<ProductResponseDTO> getProductById(Integer product_id) {
