@@ -15,9 +15,7 @@ public class DeliveryController {
 
     @PostMapping
     public Mono<DeliveryDTO> createDelivery(@RequestBody DeliveryDTO dto) {
-        System.out.println("Delivery received: " + dto);
-        return deliveryService.createDelivery(dto)
-                .doOnError(Throwable::printStackTrace);
+        return deliveryService.createDelivery(dto);
     }
 
     @GetMapping("/product/{id}")

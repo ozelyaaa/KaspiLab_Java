@@ -2,6 +2,7 @@ package kz.kaspilab.projectwebflux.services;
 
 import kz.kaspilab.projectwebflux.domains.Delivery;
 import kz.kaspilab.projectwebflux.enums.DeliveryStatus;
+import kz.kaspilab.projectwebflux.exceptions.DuplicateRequestException;
 import kz.kaspilab.projectwebflux.mappers.DeliveryMapper;
 import kz.kaspilab.projectwebflux.models.DeliveryDTO;
 import kz.kaspilab.projectwebflux.repos.DeliveryRepo;
@@ -28,7 +29,7 @@ public class DeliveryServiceImpl implements DeliveryService {
                 .acquire(key, Duration.ofSeconds(2))
                 .flatMap(acquired -> {
                     if (!acquired) {
-                        return Mono.error(new IllegalStateException("Delivery already exists"));
+                        return Mono.error(new DuplicateRequestException("Duplicate request within 2 seconds!"));
                     }
 
                     Delivery delivery = deliveryMapper.toEntity(deliveryDTO);
