@@ -12,5 +12,14 @@ spring:
     user: postgres
     password: simple
 
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
 server:
   port: 8081
+
+# USED COMMANDS
+# docker run -d --name mydb-postgres -e POSTGRES_DB=mydb -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=simple -p 5432:5432 postgres:16
+#  docker run -d --name redis -p 6379:6379 redis:7

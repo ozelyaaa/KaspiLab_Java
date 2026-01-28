@@ -5,9 +5,12 @@ import kz.kaspilab.projectwebflux.enums.DeliveryStatus;
 import kz.kaspilab.projectwebflux.mappers.DeliveryMapper;
 import kz.kaspilab.projectwebflux.models.DeliveryDTO;
 import kz.kaspilab.projectwebflux.repos.DeliveryRepo;
+import kz.kaspilab.projectwebflux.utils.KeyGeneratorUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
+
+import java.time.Duration;
 
 @Service
 @RequiredArgsConstructor
@@ -15,11 +18,22 @@ public class DeliveryServiceImpl implements DeliveryService {
 
     private final DeliveryRepo deliveryRepository;
     private final DeliveryMapper deliveryMapper;
+    private final RedisService redisService;
 
     @Override
     public Mono<DeliveryDTO> createDelivery(DeliveryDTO deliveryDTO) {
-        Delivery delivery = deliveryMapper.toEntity(deliveryDTO);
-        return deliveryRepository.save(delivery).map(deliveryMapper::toDto);
+        String key = KeyGeneratorUtil.deliveryGenerateKey(deliveryDTO);
+
+        return redisService
+                .acquire(key, Duration.ofSeconds(2))
+                .flatMap(acquired -> {
+                    if (!acquired) {
+                        return Mono.error(new IllegalStateException("Delivery already exists"));
+                    }
+
+                    Delivery delivery = deliveryMapper.toEntity(deliveryDTO);
+                    return deliveryRepository.save(delivery).map(deliveryMapper::toDto);
+                });
     }
 
     @Override
